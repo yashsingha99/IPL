@@ -17,8 +17,8 @@ const StatCard = ({ icon, label, value }) => (
   <div className="bg-white/90 rounded-lg shadow-md p-4 flex items-center space-x-3 transition-all hover:shadow-xl hover:scale-105">
     {icon}
     <div>
-      <p className="text-gray-500 text-sm">{label}</p>
-      <p className="font-bold text-blue-800">{value}</p>
+      <p className="text-gray-500 text-xl">{label}</p>
+      <p className="font-bold text-xl text-blue-800">{value}</p>
     </div>
   </div>
 );
