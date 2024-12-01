@@ -1,0 +1,299 @@
+.con {
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.carousel-inner {
+  flex: 0 0 100%;
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 100%;
+}
+
+.slide {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  min-width: 100%;
+}
+
+.slide img {
+  border-radius: 20px;
+  width: 90%;
+  height: 400px;
+  object-fit: cover;
+}
+
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: black;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 38px;
+  z-index: 1;
+}
+
+.prev {
+  left: 75px;
+}
+
+.next {
+  right: 75px;
+}
+
+.slide {
+  transition: ease-in 2s;
+}
+
+.small-cards {
+  color: black;
+  margin-bottom: 30px;
+}
+
+h4 {
+  font-size: 20px !important;
+}
+.aese {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.h {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: black;
+  margin-bottom: 40px;
+}
+
+.videos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: black;
+  margin-bottom: 40px;
+}
+
+.card img {
+  height: 160px;
+  width: 130px;
+  border-radius: 10px;
+  border: 2px solid black;
+  margin-bottom: 5px;
+}
+
+.card img:hover {
+  border: 2px dotted orangered;
+}
+
+.table {
+  width: 95%;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  border: 2px solid black;
+  padding: 20px;
+  margin: 20px 30px 30px 30px;
+  border-radius: 7px;
+}
+
+.table h2 {
+  margin-bottom: 20px;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.option {
+  padding: 15px;
+  border: 1px solid white;
+  font-size: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.option:hover {
+  transform: translateY(-2px);
+}
+
+.v-card img {
+  height: 250px;
+  width: 150px;
+  border-radius: 10px;
+  border: 2px solid black;
+  margin-bottom: 5px;
+}
+
+.poi {
+  text-align: center;
+  font-size: 35px !important;
+}
+
+.points-table {
+  display: flex;
+  overflow-x: auto;
+  padding: 20px;
+  width: 100%;
+}
+
+.points-table::-webkit-scrollbar {
+  display: none;
+}
+
+.boss {
+  margin: 30px;
+  width: 95%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 40px;
+}
+
+.teams {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.points-table h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.team-l img {
+  margin-bottom: 5px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.team-info h2 {
+  font-size: 20px;
+}
+
+
+.team-container {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+  background: transparent;
+}
+
+.team-card {
+  padding: 50px;
+  background: transparent;
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+  padding: 20px;
+  width: 280px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.sm-div {
+  display: flex;
+  flex-direction: column;
+}
+
+.team-rank {
+  font-size: 70px;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.team-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 10px 0;
+}
+
+.team-name {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.team-info {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.green {
+  color: green;
+}
+
+.team-info div {
+  margin: 5px 0;
+}
+
+.team-form {
+  margin-top: 15px;
+}
+
+.form-icons {
+  display: flex;
+  justify-content: center;
+  justify-content: space-around;
+}
+
+.form-icon {
+  width: 30px;
+  height: 30px;
+  margin: 0 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: bold;
+  color: white;
+}
+
+.form-icon.W {
+  background-color: green;
+}
+
+.form-icon.L {
+  background-color: red;
+}
+
+.form-icon.N {
+  background-color: gray;
+}
+
+.top {
+  display: flex;
+  justify-content: space-around;
+}
