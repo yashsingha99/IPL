@@ -38,4 +38,7 @@ app.use("/api/filterVenueData",  filterVenueRoute);
 const fetchMatch = require("./routers/fetchData.routes")
 app.use("/api/fetchMatch",  fetchMatch);
 
+const filterbattle = require("./sample_data/battleAnalysis")
+app.use("/api/filterBattle",  filterbattle);
+
 module.exports = app;

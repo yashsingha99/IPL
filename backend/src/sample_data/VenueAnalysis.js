@@ -3,31 +3,36 @@ const { Router } = require("express");
 const router = Router();
 const { Venue } = require("../models/match.model");
 
-
 router.get("/", async (req, res) => {
   try {
     const filteredData = {};
     const bowlers = new Set();
-    const batsmans = new Set();
+    const batsmen = new Set();
 
-    // Group matches by matchId and collect unique batsmen and bowlers
+    // Group matches by year and matchId, collect unique batsmen and bowlers
     matchData.forEach((match) => {
+      const year = match.date.substring(0, 4);
       const matchId = match.mid;
 
-      batsmans.add(match.batsman);
-      bowlers.add(match.bowler);
+      if (match.batsman) batsmen.add(match.batsman);
+      if (match.bowler) bowlers.add(match.bowler);
 
-      if (!filteredData[matchId]) {
-        filteredData[matchId] = [];
+      if (!filteredData[year]) {
+        filteredData[year] = {};
       }
-      filteredData[matchId].push(match);
+      if (!filteredData[year][matchId]) {
+        filteredData[year][matchId] = [];
+      }
+      filteredData[year][matchId].push(match);
     });
 
     const players = {};
 
     // Initialize players object
-    batsmans.forEach((batsman) => {
-      players[batsman] = {};
+    batsmen.forEach((batsman) => {
+      if (!players[batsman]) {
+        players[batsman] = {};
+      }
     });
 
     bowlers.forEach((bowler) => {
@@ -37,65 +42,71 @@ router.get("/", async (req, res) => {
     });
 
     // Process match data and calculate statistics
-    for (const [matchId, matchArray] of Object.entries(filteredData)) {
-      let prev = {
-        runs: 0,
-        wickets: 0,
-      };
+    for (const [year, matchesByYear] of Object.entries(filteredData)) {
+      for (const [matchId, matchList] of Object.entries(matchesByYear)) {
+        let prev = { runs: 0, wickets: 0 };
 
-      matchArray.forEach((match) => {
-        // Ensure venue entry exists for batsman
-        if (!players[match.batsman][match.venue]) {
-          players[match.batsman][match.venue] = {};
-        }
+        matchList.forEach((match) => {
+          if (!match) return; // Skip if match is undefined or null
 
-        // Process batsman data
-        if (!players[match.batsman][match.venue].bat) {
-          players[match.batsman][match.venue].bat = {
-            bowls: 0,
-            runs: 0,
-          };
-        }
+          const { batsman, bowler, venue, runs = 0, wickets = 0 } = match;
 
-        const batsmanData = players[match.batsman][match.venue].bat;
-        batsmanData.runs += Number(match.runs - prev.runs);
-        batsmanData.bowls += 1;
+          // Ensure batsman stats exist
+          if (batsman) {
+            if (!players[batsman][year]) {
+              players[batsman][year] = {};
+            }
+            if (!players[batsman][year][venue]) {
+               players[batsman][year][venue] = { };
+            }
+            if (!players[batsman][year][venue].bat) {
+               players[batsman][year][venue].bat = { bowls: 0, runs: 0 };
+            }
 
-        // Ensure venue entry exists for bowler
-        if (!players[match.bowler][match.venue]) {
-          players[match.bowler][match.venue] = {};
-        }
+            let batsmanData = players[batsman][year][venue].bat;
+            batsmanData.runs += Math.max(runs - (prev.runs || 0), 0); // Increment runs safely
+            batsmanData.bowls += 1;
+          }
 
-        // Process bowler data
-        if (!players[match.bowler][match.venue].bowl) {
-          players[match.bowler][match.venue].bowl = {
-            bowls: 0,
-            givesRun: 0,
-            wickets: 0,
-          };
-        }
+          // Ensure bowler stats exist
+          if (bowler) {
+            if (!players[bowler][year]) {
+              players[bowler][year] = {};
+            }
+            if (!players[bowler][year][venue]) {
+              players[bowler][year][venue] = { };
+            }
+            if (!players[bowler][year][venue].bowl) {
+              players[bowler][year][venue].bowl = {
+                bowls: 0,
+                givesRun: 0,
+                wickets: 0,
+              };
+            }
 
-        const bowlerData = players[match.bowler][match.venue].bowl;
-        bowlerData.givesRun += Number(match.runs - prev.runs);
-        bowlerData.wickets += Number(match.wickets - prev.wickets);
-        bowlerData.bowls += 1;
+            let bowlerData = players[bowler][year][venue].bowl;
+            bowlerData.givesRun += Math.max(runs - (prev.runs || 0), 0); // Increment runs safely
+            bowlerData.wickets += Math.max(wickets - (prev.wickets || 0), 0); // Increment wickets safely
+            bowlerData.bowls += 1;
+          }
 
-        // Update previous values
-        prev = {
-          runs: match.runs,
-          wickets: match.wickets,
-        };
-      });
+          prev = { runs, wickets };
+        });
+      }
     }
 
-
+    // Save the processed data to the database
     await Venue.deleteMany({});
-    const venueData = Object.entries(players).map(([name, stats]) => ({ name, stats }));
+    const venueData = Object.entries(players).map(([name, stats]) => ({
+      name,
+      stats,
+    }));
     await Venue.insertMany(venueData);
 
     // Respond with the processed data
     res.status(200).json({
       message: "Data processed and stored successfully.",
+      venueData,
     });
   } catch (error) {
     console.error("Error processing matches:", error);

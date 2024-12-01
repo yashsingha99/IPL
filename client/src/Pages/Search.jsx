@@ -3,6 +3,7 @@ import { getBatter, getBowler } from "../api/match.api";
 import { Link } from "react-router-dom";
 import { Search, User, Trophy, Volleyball } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import PlayerProfile from "../components/PlayerProfile";
 
 const SearchBox = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -146,6 +147,7 @@ const SearchBox = () => {
           <p>Start typing to search for players!</p>
         </motion.div>
       )}
+      <PlayerProfile name = {searchTerm} />
     </div>
   );
 };

@@ -24,6 +24,8 @@ import SinglePlayer from "./Pages/SinglePlayer.jsx";
 import SingleGround from "./Pages/SingleGround.jsx";
 import App from "./App.jsx";
 import "./index.css";
+import PlayerProfile from "./components/PlayerProfile.jsx";
+import VenueYearStats from "./Pages/VenueYearStats.jsx";
 // import { AuthProvider, AuthContext } from "./Context.jsx";
 
 const ProtectedRoute = ({ element }) => {
@@ -66,6 +68,10 @@ const router = createBrowserRouter(
       <Route
         path="/player"
         element={<ProtectedRoute element={<BatterYearStats />} />}
+      />
+      <Route
+        path="/venue"
+        element={<ProtectedRoute element={<VenueYearStats />} />}
       />
     </Route>
   )
