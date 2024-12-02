@@ -77,6 +77,15 @@ export const venueById = async (id) => {
     console.error("Error fetching bowler data:", error);
   }
 };
+export const allVenue = async () => {
+  try {
+    
+    const res = await axios.get(`${URI}/allVenue`);
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching bowler data:", error);
+  }
+};
 
 export const getbattle = async(data) => {
   try {

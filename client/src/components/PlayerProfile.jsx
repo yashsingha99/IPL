@@ -15,7 +15,7 @@ import { Link, useSearchParams } from "react-router-dom";
 const PlayerProfile = () => {
   const [searchParams] = useSearchParams();
 
-  let name = searchParams.get("name")
+  let name = searchParams.get("name");
   const [players, setPlayers] = useState([]);
   const [playerVenue, setPlayerVenue] = useState();
   const [filteredPlayer, setFilteredPlayer] = useState(null);
@@ -44,29 +44,34 @@ const PlayerProfile = () => {
       }
     };
 
-      const nameParts = name.split(" ");
-        const initials = nameParts.slice(0, -1).map((n) => n[0].toUpperCase()).join("");
-        const lastName = nameParts[nameParts.length - 1];
-        name = initials+" "+(lastName.charAt(0).toUpperCase() + lastName.substring(1))
-          
+    const nameParts = name.split(" ");
+    const initials = nameParts
+      .slice(0, -1)
+      .map((n) => n[0].toUpperCase())
+      .join("");
+    const lastName = nameParts[nameParts.length - 1];
+    name =
+      initials +
+      " " +
+      (lastName.charAt(0).toUpperCase() + lastName.substring(1));
 
     const fetchPlayersVenue = async () => {
       try {
         const res = await getPlayerVenue(name);
         setPlayerVenue(res);
         const fetchedBattingResults = await getBatter(name);
-      const fetchedBowlingResults = await getBowler(name);
-     console.log(fetchedBattingResults);
-     console.log(fetchedBowlingResults);
-     
-      setBattingResults(fetchedBattingResults || null);
-      setBowlingResults(fetchedBowlingResults || null);
+        const fetchedBowlingResults = await getBowler(name);
+        console.log(fetchedBattingResults);
+        console.log(fetchedBowlingResults);
+
+        setBattingResults(fetchedBattingResults || null);
+        setBowlingResults(fetchedBowlingResults || null);
         // console.log(res);
       } catch (err) {
         console.error("Error fetching players:", err);
       }
     };
-   
+
     fetchPlayers();
     fetchPlayersVenue();
   }, [name]);
@@ -89,12 +94,17 @@ const PlayerProfile = () => {
     </button>
   );
 
-  if(!filteredPlayer){
+  if (!filteredPlayer) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100">
         <div className="text-center">
-          <Volleyball className="mx-auto animate-spin text-blue-500" size={64} />
-          <p className="mt-4 text-blue-700 font-semibold">Loading Player Stats...</p>
+          <Volleyball
+            className="mx-auto animate-spin text-blue-500"
+            size={64}
+          />
+          <p className="mt-4 text-blue-700 font-semibold">
+            Loading Player Stats...
+          </p>
         </div>
       </div>
     );
@@ -171,71 +181,86 @@ const PlayerProfile = () => {
       case "stats":
         return (
           <AnimatePresence>
-          {(battingResults || bowlingResults) && (
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="space-y-4"
-            >
-              {/* Batting Results */}
-              {battingResults && (
-                <motion.div 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="bg-blue-50 p-4 rounded-lg"
-                >
-                  <div className="flex items-center space-x-2 mb-2">
-                    <Trophy className="text-blue-600 h-6 w-6" />
-                    <h2 className="text-lg font-semibold text-blue-800">Batting Stats: {battingResults.name}</h2>
-                  </div>
-                  <div className="grid grid-cols-3 gap-2">
-                    {battingResults.stats &&
-                      Object.keys(battingResults?.stats)?.map((year) => (
-                        <Link
-                          key={year}
-                          to={`/player/?batingId=${battingResults._id}&bowlingId=${
-                            bowlingResults?._id || "_"
-                          }&year=${year}`}
-                          className="bg-white shadow-sm rounded-md p-2 text-center hover:bg-blue-100 transition-colors"
-                        >
-                          <div className="font-medium text-blue-600">{year}</div>
-                        </Link>
-                      ))}
-                  </div>
-                </motion.div>
-              )}
-  
-              {/* Bowling Results */}
-              {bowlingResults && (
-                <motion.div 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="bg-green-50 p-4 rounded-lg"
-                >
-                  <div className="flex items-center space-x-2 mb-2">
-                    <Trophy className="text-green-600 h-6 w-6" />
-                    <h2 className="text-lg font-semibold text-green-800">Bowling Stats: {bowlingResults.name}</h2>
-                  </div>
-                  <div className="grid grid-cols-3 gap-2">
-                    {bowlingResults.stats &&
-                      Object.keys(bowlingResults.stats).map((year) => (
-                        <Link
-                          key={year}
-                          to={`/player/?batingId=${battingResults._id}&bowlingId=${
-                            bowlingResults?._id || "_"
-                          }&year=${year}`}
-                          className="bg-white shadow-sm rounded-md p-2 text-center hover:bg-green-100 transition-colors"
-                        >
-                          <div className="font-medium text-green-600">{year}</div>
-                        </Link>
-                      ))}
-                  </div>
-                </motion.div>
-              )}
-            </motion.div>
-          )}
-        </AnimatePresence>
+            {(battingResults || bowlingResults) && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="space-y-4"
+              >
+                {/* Batting Results */}
+                {battingResults && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="bg-blue-50 p-4 rounded-lg"
+                  >
+                    <div className="flex items-center space-x-2 mb-2">
+                      <Trophy className="text-blue-600 h-6 w-6" />
+                      <h2 className="text-lg font-semibold text-blue-800">
+                        Batting Stats: {battingResults.name}
+                      </h2>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      {battingResults?.stats ? (
+                        Object.keys(battingResults.stats).map((year) => (
+                          <Link
+                            key={year}
+                            to={`/player/?batingId=${
+                              battingResults._id
+                            }&bowlingId=${
+                              bowlingResults?._id || "_"
+                            }&year=${year}`}
+                            className="bg-white shadow-sm rounded-md p-2 text-center hover:bg-blue-100 transition-colors"
+                          >
+                            <div className="font-medium text-blue-600">
+                              {year}
+                            </div>
+                          </Link>
+                        ))
+                      ) : (
+                        <h1>Give Correct Name of Player</h1>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* Bowling Results */}
+                {bowlingResults && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="bg-green-50 p-4 rounded-lg"
+                  >
+                    <div className="flex items-center space-x-2 mb-2">
+                      <Trophy className="text-green-600 h-6 w-6" />
+                      <h2 className="text-lg font-semibold text-green-800">
+                        Bowling Stats: {bowlingResults.name}
+                      </h2>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      {bowlingResults.stats &&
+                        Object.keys(bowlingResults.stats).map((year) => (
+                          <Link
+                            key={year}
+                            to={`/player/?batingId=${
+                              battingResults._id
+                            }&bowlingId=${
+                              bowlingResults?._id || "_"
+                            }&year=${year}`}
+                            className="bg-white shadow-sm rounded-md p-2 text-center hover:bg-green-100 transition-colors"
+                          >
+                            <div className="font-medium text-green-600">
+                              {year}
+                            </div>
+                          </Link>
+                        ))}
+                    </div>
+                  </motion.div>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         );
       case "ground":
         return (
@@ -251,16 +276,23 @@ const PlayerProfile = () => {
               </h2>
             </div>
             <div className="grid grid-cols-3 gap-2">
-              {playerVenue.stats &&
-                Object.keys(playerVenue.stats).map((year) => (
-                  <Link
-                    key={year}
-                    to={`/venue/?playerId=${playerVenue._id}&year=${year}`}
-                    className="bg-white shadow-sm rounded-md p-2 text-center hover:bg-green-100 transition-colors"
-                  >
-                    <div className="font-medium text-green-600">{year}</div>
-                  </Link>
-                ))}
+              {playerVenue ? (
+                playerVenue.stats ? (
+                  Object.keys(playerVenue.stats).map((year) => (
+                    <Link
+                      key={year}
+                      to={`/venue/?playerId=${playerVenue._id}&year=${year}`}
+                      className="bg-white shadow-sm rounded-md p-2 text-center hover:bg-green-100 transition-colors"
+                    >
+                      <div className="font-medium text-green-600">{year}</div>
+                    </Link>
+                  ))
+                ) : (
+                  <h1>No stats available for this player.</h1>
+                )
+              ) : (
+                <h1>Give Correct Name of Player</h1>
+              )}
             </div>
           </motion.div>
         );
@@ -270,7 +302,7 @@ const PlayerProfile = () => {
   };
 
   return (
-    <div className="w-full mx-auto bg-gray-50 min-h-screen">
+    <div className="w-full -mt-80 mx-auto bg-gray-50 min-h-screen">
       {/* Header Section */}
       <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-12">
         <div className="flex items-center space-x-8">

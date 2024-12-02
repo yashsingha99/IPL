@@ -30,6 +30,7 @@ import NotFound from "./Pages/NotFound.jsx";
 import Battle from "./Pages/Battle.jsx";
 
 const ProtectedRoute = ({ element }) => {
+  
   // const { isAuthenticated } = useContext(AuthContext);
   let token = Cookies.get("user");
   return token ? element : <Navigate to="/login" replace />;

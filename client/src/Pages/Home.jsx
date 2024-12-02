@@ -100,7 +100,7 @@ const Home = () => {
       views: "217.1k",
       duration: "16:37 mins",
       videoUrl:
-        "https://www.youtube.com/embed/Mj1I2nnQsqg?autoplay=1&mute=1&controls=0&modestbranding=1&showinfo=0&rel=0&loop=1&playlist=Mj1I2nnQsqg",
+        "https://www.youtube.com/embed/Mj1I2nnQsqg?autoplay=0&mute=1&controls=0&modestbranding=1&showinfo=0&rel=0&loop=1&playlist=Mj1I2nnQsqg",
     },
     {
       title: "A delighted & emotional reflects on...",
@@ -108,7 +108,7 @@ const Home = () => {
       views: "79.9k",
       duration: "01:48 mins",
       videoUrl:
-        "https://www.youtube.com/embed/gG6GMmwdE-g?autoplay=1&mute=1&controls=0&modestbranding=1&showinfo=0&rel=0&loop=1&playlist=gG6GMmwdE-g",
+        "https://www.youtube.com/embed/gG6GMmwdE-g?autoplay=0&mute=1&controls=0&modestbranding=1&showinfo=0&rel=0&loop=1&playlist=gG6GMmwdE-g",
     },
     {
       title: "Champions speak: Post Mitchell...",
@@ -116,7 +116,7 @@ const Home = () => {
       views: "157.1k",
       duration: "02:00 mins",
       videoUrl:
-        "https://www.youtube.com/embed/P26JOXiwGlU?autoplay=1&mute=1&controls=0&modestbranding=1&showinfo=0&rel=0&loop=1&playlist=P26JOXiwGlU",
+        "https://www.youtube.com/embed/P26JOXiwGlU?autoplay=0&mute=1&controls=0&modestbranding=1&showinfo=0&rel=0&loop=1&playlist=P26JOXiwGlU",
     },
     {
       title: "IPL 2024 Winning Captain...",
@@ -124,10 +124,10 @@ const Home = () => {
       views: "108.3k",
       duration: "01:00 mins",
       videoUrl:
-        "https://www.youtube.com/embed/9vz_0iVNTs0?autoplay=1&mute=1&controls=0&modestbranding=1&showinfo=0&rel=0&loop=1&playlist=9vz_0iVNTs0",
+        "https://www.youtube.com/embed/9vz_0iVNTs0?autoplay=0&mute=1&controls=0&modestbranding=1&showinfo=0&rel=0&loop=1&playlist=9vz_0iVNTs0",
     },
   ];
-  `                                         `;
+
   const images = [slide4, slide2, slide3, slide5, slide6];
 
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -146,7 +146,6 @@ const Home = () => {
     return () => clearInterval(interval);
   }, [currentSlide]);
 
-  // Variants for animations
   const pageVariants = {
     initial: { opacity: 0, y: 20 },
     in: { opacity: 1, y: 0 },
@@ -194,7 +193,7 @@ const Home = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.6 }}
-        className="container mx-8 px-4 py-8 w-full"
+        className="container mx-0 px-4 py-4 w-full"
       >
         <LayoutGroup>
           <motion.h2

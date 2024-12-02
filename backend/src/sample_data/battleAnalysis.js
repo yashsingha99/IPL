@@ -126,10 +126,17 @@ router.get("/", async (req, res) => {
   }
 });
 
+const createNameRegex = (fullName) => {
+  const [firstName, lastName] = fullName.split(" ");
+  if (!firstName || !lastName) return fullName; // Handle edge cases
+  return new RegExp(`^${firstName[0]}\\.\\s*${lastName}$`, "i"); // Match "V Kohli"
+};
+
 router.get("/batsman/:batsman/bowler/:bowler", async (req, res) => {
   try {
     const { batsman, bowler } = req.params;
 
+     
     // Find all battles where the batsman and bowler pair exists
     const batterdata = await Battle.findOne({
       name: batsman,

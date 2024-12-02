@@ -79,6 +79,17 @@ router.get("/venue/:name", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch batsman." });
   }
 });
+router.get("/allVenue", async (req, res) => {
+  try {
+    const { name } = req.params;
+    const player = await Venue.find({  });
+    if (!player) return res.status(404).json({ error: "Player not found." });
+    res.status(200).json(player);
+  } catch (error) {
+    console.error("Error fetching batsman:", error);
+    res.status(500).json({ error: "Failed to fetch batsman." });
+  }
+});
 
 router.get("/venueById/:id", async (req, res) => {
   try {

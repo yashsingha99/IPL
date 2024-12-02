@@ -17,6 +17,7 @@ function App() {
       } catch (error) {
         console.log(error);
         Cookies.remove("user");
+        // navigate("/login")
       }
     }
   }, [navigate]);
