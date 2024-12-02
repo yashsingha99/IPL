@@ -191,7 +191,7 @@ const PlayerProfile = () => {
                   </div>
                   <div className="grid grid-cols-3 gap-2">
                     {battingResults.stats &&
-                      Object.keys(battingResults.stats).map((year) => (
+                      Object.keys(battingResults?.stats)?.map((year) => (
                         <Link
                           key={year}
                           to={`/player/?batingId=${battingResults._id}&bowlingId=${

@@ -197,7 +197,7 @@ const CricketChart = ({ data, isBowler, isVenue, isBettle }) => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-4">
+    <div className="w-full h-full mx-auto mt-10 p-4">
       <Bar data={chartData} options={chartOptions} />
     </div>
   );

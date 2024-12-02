@@ -48,8 +48,7 @@ function Battle() {
   };
 
   return (
-    <div className="p-6 w-full mx-auto">
-      {/* Title Section */}
+    <div className="mb-80 p-6 w-full mx-auto">
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold text-primary mb-2 flex items-center justify-center">
           <Sword className="w-6 h-6 mr-2 text-blue-500" />
@@ -60,7 +59,6 @@ function Battle() {
         </p>
       </div>
 
-      {/* Input Section */}
       <div className="flex flex-col items-center w-full">
         <div className="w-[30%] space-y-4">
           <div className="flex items-center border border-gray-300 rounded-lg p-2">
@@ -102,8 +100,8 @@ function Battle() {
 
       {/* Result Section */}
       {result && (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 p-4 lg:p-8">
-          <div className="w-full mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
+        <div className="h-full bg-gradient-to-br from-blue-50 to-blue-100 p-4 lg:p-8">
+          <div className="w-full h-full mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
             <div className="bg-blue-600 w-full text-white p-6 flex flex-col md:flex-row items-center justify-between">
               <div className="flex w-full items-center space-x-4">
                 <User className="text-white" size={40} />
@@ -114,7 +112,7 @@ function Battle() {
                 </div>
               </div>
             </div>
-            <div className="w-full flex">
+            <div className="w-full justify-evenly flex">
               <CricketChart data={battingData} isBettle />
               <CricketChart data={bowlingData} isBettle isBowler />
             </div>
