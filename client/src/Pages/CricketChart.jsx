@@ -21,12 +21,61 @@ ChartJS.register(
   Legend
 );
 
-const CricketChart = ({ data, isBowler, isVenue }) => {
+const CricketChart = ({ data, isBowler, isVenue, isBettle }) => {
   // Process the data to create chart data structure
   console.log(data);
   let chartData;
-
-  if (isVenue) {
+  if(isBettle){ 
+    if(!isBowler){
+      chartData = {
+        labels: Object.keys(data), // Venue names as labels
+        datasets: [
+          {
+            label: "Bowls",
+            data: Object.values(data).map((match) => match?.bowls || 0),
+            backgroundColor: "rgba(255, 99, 132, 0.2)",
+            borderColor: "rgba(255, 99, 132, 1)",
+            borderWidth: 1,
+          },
+          {
+            label: "Runs",
+            data: Object.values(data).map((match) => match?.runs || 0),
+            backgroundColor: "rgba(54, 162, 235, 0.2)",
+            borderColor: "rgba(54, 162, 235, 1)",
+            borderWidth: 1,
+          },
+        ],
+      };
+    }  else {
+      chartData = {
+        labels: Object.keys(data), // Venue names as labels
+        datasets: [
+          {
+            label: "Bowls",
+            data: Object.values(data).map((match) => match?.bowls || 0),
+            backgroundColor: "rgba(255, 99, 132, 0.2)",
+            borderColor: "rgba(255, 99, 132, 1)",
+            borderWidth: 1,
+          },
+          {
+            label: "Runs Given",
+            data: Object.values(data).map((match) => match?.givesRun || 0),
+            backgroundColor: "rgba(255, 159, 64, 0.2)",
+            borderColor: "rgba(255, 159, 64, 1)",
+            borderWidth: 1,
+          },
+          {
+            label: "Wickets",
+            data: Object.values(data).map((match) => match?.wickets || 0),
+            backgroundColor: "rgba(54, 162, 235, 0.2)",
+            borderColor: "rgba(54, 162, 235, 1)",
+            borderWidth: 1,
+          },
+        ],
+      };
+    }
+    
+  } else if (isVenue) {
     if (!isBowler) {
       chartData = {
         labels: Object.keys(data), // Venue names as labels

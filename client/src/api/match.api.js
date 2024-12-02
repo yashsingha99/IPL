@@ -80,7 +80,9 @@ export const venueById = async (id) => {
 
 export const getbattle = async(data) => {
   try {
-    const res = await axios.get(`http://localhost:5000/api/filterBattle/batsman/${data.batsman}/bowler/${data.bowler}}`);
+    const res = await axios.get(`http://localhost:5000/api/filterBattle/batsman/${data.batsman}/bowler/${data.bowler}`);
+    console.log(res);
+    
     return res.data;
   } catch (error) {
     console.error("Error fetching bowler data:", error);

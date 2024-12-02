@@ -5,7 +5,6 @@ const playerData = require("../sample_data/player.data");
 const playerQuery = async (req, res) => {
   try {
     const { name, _id, role, country, allPlayer} = req.body;
-   console.log(req.body);
    
     if (!name && !_id && !role && !country && !allPlayer) {
       return res.status(400).json({ message: "request data not found" });

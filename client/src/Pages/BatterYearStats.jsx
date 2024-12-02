@@ -41,8 +41,12 @@ const BatterYearStats = () => {
     const fetchStats = async () => {
       setLoading(true);
       try {
-        const fetchBattingStats = battingId ? await getBatterById(battingId) : null;
-        const fetchBowlingStats = bowlingId ? await getBowlerById(bowlingId) : null;
+        const fetchBattingStats = battingId
+          ? await getBatterById(battingId)
+          : null;
+        const fetchBowlingStats = bowlingId
+          ? await getBowlerById(bowlingId)
+          : null;
 
         if (fetchBattingStats) {
           setPlayerName(fetchBattingStats.name || "Player");
@@ -67,8 +71,13 @@ const BatterYearStats = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100">
         <div className="text-center">
-          <Volleyball className="mx-auto animate-spin text-blue-500" size={64} />
-          <p className="mt-4 text-blue-700 font-semibold">Loading Player Stats...</p>
+          <Volleyball
+            className="mx-auto animate-spin text-blue-500"
+            size={64}
+          />
+          <p className="mt-4 text-blue-700 font-semibold">
+            Loading Player Stats...
+          </p>
         </div>
       </div>
     );
@@ -93,7 +102,9 @@ const BatterYearStats = () => {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
         <div className="text-center bg-white p-8 rounded-xl shadow-xl">
           <Star className="mx-auto text-gray-500 mb-4" size={64} />
-          <p className="text-gray-700 font-semibold">No stats available for this year.</p>
+          <p className="text-gray-700 font-semibold">
+            No stats available for this year.
+          </p>
         </div>
       </div>
     );
@@ -143,21 +154,59 @@ const BatterYearStats = () => {
           <div className="grid grid-cols-2 gap-4">
             {!isBowler ? (
               <>
-                <StatCard icon={<CandyCane className="text-green-500" />} label="Total Runs" value={currentMatch?.runs || 0} />
-                <StatCard icon={<Clock className="text-blue-500" />} label="Balls Faced" value={currentMatch?.bowl || 0} />
+                <StatCard
+                  icon={<CandyCane className="text-green-500" />}
+                  label="Total Runs"
+                  value={currentMatch?.runs || 0}
+                />
+                <StatCard
+                  icon={<Clock className="text-blue-500" />}
+                  label="Balls Faced"
+                  value={currentMatch?.bowl || 0}
+                />
+                <StatCard
+                  icon={<BarChart2 />}
+                  label={"Strike Rate"}
+                  value={(
+                    (currentMatch?.runs / currentMatch?.bowl) * 100 || 0
+                  ).toFixed(2)}
+                  color="purple"
+                />
               </>
             ) : (
               <>
-                <StatCard icon={<Trophy className="text-red-500" />} label="Wickets" value={currentMatch?.bowl || 0} />
-                <StatCard icon={<Trophy className="text-red-500" />} label="Wickets" value={currentMatch?.wicket || 0} />
-                <StatCard icon={<BarChart2 className="text-purple-500" />} label="Runs Given" value={currentMatch?.givesRun || 0} />
+                <StatCard
+                  icon={<Trophy className="text-red-500" />}
+                  label="Bowls"
+                  value={currentMatch?.bowl || 0}
+                />
+                <StatCard
+                  icon={<Trophy className="text-red-500" />}
+                  label="Wickets"
+                  value={currentMatch?.wicket || 0}
+                />
+                <StatCard
+                  icon={<BarChart2 className="text-purple-500" />}
+                  label="Runs Given"
+                  value={currentMatch?.givesRun || 0}
+                />
+                  <StatCard
+                  icon={<BarChart2 />}
+                  label={"Economy Rate"}
+                  value={(
+                    (currentMatch?.wicket !== 0  ? (currentMatch?.bowl / currentMatch?.wicket) : 0)  || 0
+                  ).toFixed(2)}
+                  color="purple"
+                />
               </>
             )}
           </div>
         </div>
 
         <div className="p-6 bg-gray-50">
-          <h3 className="text-xl font-semibold mb-4 text-gray-800">Match Details</h3>
+          <h3 className="text-xl font-semibold mb-4 text-gray-800">
+            Match Details
+          </h3>
           <div className="flex overflow-x-auto space-x-4 pb-4">
             {matches.map((matchKey, index) => (
               <button
@@ -185,15 +234,19 @@ const BatterYearStats = () => {
                   <strong>Team:</strong> {currentMatch?.team || "N/A"}
                 </p>
                 <p className="text-gray-600">
-                  <strong>Against:</strong> {currentMatch?.against_team || "N/A"}
+                  <strong>Against:</strong>{" "}
+                  {currentMatch?.against_team || "N/A"}
                 </p>
               </div>
               <div>
                 <strong>Played with {isBowler ? "Batters" : "Bowlers"}:</strong>
                 <ul className="list-disc pl-5 mt-1 text-gray-600">
-                  {(isBowler ? currentMatch?.playWithBatters : currentMatch?.playWithBowlers)?.map((player, idx) => (
-                    <li key={idx}>{player}</li>
-                  )) || <li>No data available</li>}
+                  {(isBowler
+                    ? currentMatch?.playWithBatters
+                    : currentMatch?.playWithBowlers
+                  )?.map((player, idx) => <li key={idx}>{player}</li>) || (
+                    <li>No data available</li>
+                  )}
                 </ul>
               </div>
             </div>

@@ -129,8 +129,6 @@ router.get("/", async (req, res) => {
 router.get("/batsman/:batsman/bowler/:bowler", async (req, res) => {
   try {
     const { batsman, bowler } = req.params;
-    console.log(batsman);
-    console.log(bowler);
 
     // Find all battles where the batsman and bowler pair exists
     const batterdata = await Battle.findOne({
@@ -146,7 +144,7 @@ router.get("/batsman/:batsman/bowler/:bowler", async (req, res) => {
     if (!bowlerdata || bowlerdata.length === 0 || !batterdata || batterdata.length === 0) {
       return res
         .status(404)
-        .json({ message: `No data found for ${batsman} vs ${bowler}` });
+        .json({ message: `No data found for ${batsman} vs ${bowler}`, bowlerdata,  batterdata});
     }
 
     res.status(200).json({batterdata, bowlerdata});

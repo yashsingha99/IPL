@@ -1,28 +1,29 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { venueById } from '../api/match.api';
-import { 
-  BarChart2, 
-  CandyCane, 
-  Clock, 
-  MapPin, 
-  Trophy, 
-  User, 
+import { venueById } from "../api/match.api";
+import {
+  BarChart2,
+  CandyCane,
+  Clock,
+  MapPin,
+  Trophy,
+  User,
   Volleyball,
-  Info
-} from 'lucide-react';
-import CricketChart from './CricketChart';
+  Info,
+} from "lucide-react";
+import CricketChart from "./CricketChart";
 
 // Reusable Card Component with Enhanced Styling
-const StatsCard = ({ 
-  icon, 
-  label, 
-  value, 
-  sublabel = null, 
-  color = "blue", 
-  className = "" 
+const StatsCard = ({
+  icon,
+  label,
+  value,
+  sublabel = null,
+  color = "blue",
+  className = "",
 }) => (
-  <div className={`
+  <div
+    className={`
     bg-white 
     rounded-xl 
     shadow-md 
@@ -36,7 +37,8 @@ const StatsCard = ({
     transition-all 
     duration-300
     ${className}
-  `}>
+  `}
+  >
     <div className={`p-3 rounded-full bg-${color}-50`}>
       {React.cloneElement(icon, { className: `text-${color}-500` })}
     </div>
@@ -52,8 +54,13 @@ const StatsCard = ({
 const LoadingView = () => (
   <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100">
     <div className="text-center bg-white p-8 rounded-xl shadow-2xl">
-      <Volleyball className="mx-auto animate-spin text-blue-500 mb-4" size={64} />
-      <h2 className="text-2xl font-bold text-blue-700 mb-2">Loading Player Stats</h2>
+      <Volleyball
+        className="mx-auto animate-spin text-blue-500 mb-4"
+        size={64}
+      />
+      <h2 className="text-2xl font-bold text-blue-700 mb-2">
+        Loading Player Stats
+      </h2>
       <p className="text-gray-500">Fetching performance data...</p>
     </div>
   </div>
@@ -64,9 +71,11 @@ const ErrorView = ({ message }) => (
   <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-red-100">
     <div className="text-center bg-white p-8 rounded-xl shadow-2xl">
       <Info className="mx-auto text-red-500 mb-4" size={64} />
-      <h2 className="text-2xl font-bold text-red-700 mb-2">Oops! Something went wrong</h2>
+      <h2 className="text-2xl font-bold text-red-700 mb-2">
+        Oops! Something went wrong
+      </h2>
       <p className="text-gray-600 mb-4">{message}</p>
-      <button 
+      <button
         onClick={() => window.location.reload()}
         className="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition-colors"
       >
@@ -80,10 +89,11 @@ function VenueYearStats() {
   const [searchParams] = useSearchParams();
   const playerId = searchParams.get("playerId");
   const year = searchParams.get("year");
-  
+
   const [venue, setVenue] = useState(null);
   const [isBowler, setIsBowler] = useState(false);
   const [playerName, setPlayerName] = useState("");
+  const [currVenue, setCurrVenue] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -91,7 +101,7 @@ function VenueYearStats() {
     try {
       setLoading(true);
       const res = await venueById(playerId);
-      
+
       setVenue(res?.stats[year]);
       setPlayerName(res?.name);
     } catch (error) {
@@ -100,11 +110,12 @@ function VenueYearStats() {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     fetchVenue();
   }, [playerId, year]);
+  console.log(venue);
 
   if (loading) return <LoadingView />;
   if (error) return <ErrorView message={error} />;
@@ -112,8 +123,7 @@ function VenueYearStats() {
   // Render main content
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 p-4 lg:p-8">
-      <div className="max-w-7xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden">
-        {/* Header Section */}
+      <div className="w-full mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden">
         <div className="bg-blue-600 text-white p-6 md:p-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-4 mb-4 md:mb-0">
@@ -123,7 +133,7 @@ function VenueYearStats() {
                 <p className="text-blue-100 text-lg">Performance in {year}</p>
               </div>
             </div>
-            
+
             {/* Toggle Buttons */}
             <div className="flex space-x-4 bg-blue-700 rounded-full p-2">
               <button
@@ -150,41 +160,75 @@ function VenueYearStats() {
           </div>
         </div>
 
-        {/* Content Grid */}
-        <div className="grid md:grid-cols-2 gap-6 p-6">
-          {/* Cricket Chart */}
-          <div className="bg-gray-50 rounded-xl p-4 shadow-inner">
+        <div className=" w-full flex justify-betweengap-6 p-6">
+          <div className="w-[60%] bg-gray-50 rounded-xl p-4 shadow-inner">
             <CricketChart data={venue} isBowler={isBowler} isVenue />
           </div>
 
           {/* Stats Cards */}
-          <div className="grid md:grid-cols-2 gap-4">
-            <StatsCard 
-              icon={<CandyCane />} 
-              label={isBowler ? "Runs Conceded" : "Total Runs"} 
-              value={isBowler ? venue?.runsGiven || 0 : venue?.runs || 0} 
+          <div className=" w-[40%] grid md:grid-cols-2 gap-4">
+            <StatsCard
+              icon={<CandyCane />}
+              label={isBowler ? "Runs Conceded" : "Total Runs"}
+              value={isBowler ? currVenue?.bowl?.givesRun || 0 : currVenue?.bat?.runs || 0}
               color="green"
             />
-            <StatsCard 
-              icon={<Trophy />} 
-              label={isBowler ? "Wickets" : "Innings Played"} 
-              value={isBowler ? venue?.wickets || 0 : venue?.innings || 0} 
-              color="red"
-            />
-            <StatsCard 
-              icon={<Clock />} 
-              label={isBowler ? "Overs Bowled" : "Balls Faced"} 
-              value={isBowler ? venue?.oversBowled || 0 : venue?.ballsFaced || 0} 
+            <StatsCard
+              icon={<Clock />}
+              label={isBowler ? "Total Bowled" : "Balls Faced"}
+              value={
+                isBowler ? currVenue?.bowl?.bowls || 0 : currVenue?.bat?.bowls || 0
+              }
               color="blue"
             />
-            <StatsCard 
-              icon={<BarChart2 />} 
-              label={isBowler ? "Economy Rate" : "Strike Rate"} 
-              value={isBowler ? (venue?.economyRate || 0).toFixed(2) : (venue?.strikeRate || 0).toFixed(2)} 
+            <StatsCard
+              icon={<BarChart2 />}
+              label={isBowler ? "Economy Rate" : "Strike Rate"}
+              value={
+                isBowler
+                  ? (currVenue?.bowl?.wickets !== 0 ? (currVenue?.bowl?.givesRun / currVenue?.bowl?.wickets) : 0  || 0).toFixed(2)
+                  : ((currVenue?.bat?.runs / currVenue?.bat?.bowls)*100  || 0).toFixed(2)
+              }
               color="purple"
             />
           </div>
+
         </div>
+          <div className="p-4 flex gap-4 flex-wrap">
+            {Object.entries(venue).map(([venueName, details]) => {
+              if((isBowler && details.bowl) || (!isBowler && details.bat))
+            return (
+              // <div key={venueName} onClick={ () => setCurrVenue(details) }  className="border-b pb-4 mb-4">
+                // <h2 className="font-bold text-lg">{venueName}</h2>
+                // {/* <div className="pl-4">
+                //   {Object.entries(details).map(([role, stats]) => (
+                //     <div key={role} className="mb-2">
+                //       <h3 className="font-semibold capitalize">{role}</h3>
+                //       <ul className="list-disc pl-6">
+                //         {Object.entries(stats).map(([key, value]) => (
+                //           <li key={key}>
+                //             {key}: {value}
+                //           </li>
+                //         ))}
+                //       </ul>
+                //     </div>
+                //   ))}
+                // </div> */}
+                  <button
+                key={venueName}
+                onClick={ () => setCurrVenue(details) }
+                className={`flex-shrink-0 p-3 rounded-lg transition-all ${
+                  currVenue === details
+                    ? "bg-blue-600 text-white shadow-lg"
+                    : "bg-white text-gray-700 hover:bg-blue-100"
+                }`}
+              >
+                <MapPin className="mr-2 inline" size={20} />
+                {venueName}
+                  </button>
+              // </div>
+            )})}
+          </div>
       </div>
     </div>
   );
