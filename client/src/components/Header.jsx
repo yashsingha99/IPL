@@ -61,6 +61,9 @@ const Header = () => {
             <Link className="text-md mr-4" to="/search">
               Search
             </Link>
+            <Link className="text-md mr-4" to="/Battle">
+                Battle
+            </Link>
           </div>
 
           <div

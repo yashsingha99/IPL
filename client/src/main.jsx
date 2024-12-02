@@ -26,9 +26,8 @@ import App from "./App.jsx";
 import "./index.css";
 import PlayerProfile from "./components/PlayerProfile.jsx";
 import VenueYearStats from "./Pages/VenueYearStats.jsx";
-import Bettle from "./Pages/Bettle.jsx";
 import NotFound from "./Pages/NotFound.jsx";
-// import { AuthProvider, AuthContext } from "./Context.jsx";
+import Battle from "./Pages/Battle.jsx";
 
 const ProtectedRoute = ({ element }) => {
   // const { isAuthenticated } = useContext(AuthContext);
@@ -76,14 +75,13 @@ const router = createBrowserRouter(
         element={<ProtectedRoute element={<VenueYearStats />} />}
       />
       <Route
-        path="/bettle"
-        element={<ProtectedRoute element={<Bettle />} />}
+        path="/battle"
+        element={<ProtectedRoute element={<Battle />} />}
       />
       <Route
         path= "*"
         element= {<NotFound />}
       />
-
     </Route>
   )
 );
