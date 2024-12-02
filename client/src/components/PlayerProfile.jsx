@@ -15,7 +15,7 @@ import { Link, useSearchParams } from "react-router-dom";
 const PlayerProfile = () => {
   const [searchParams] = useSearchParams();
 
-  const name = searchParams.get("name")
+  let name = searchParams.get("name")
   const [players, setPlayers] = useState([]);
   const [playerVenue, setPlayerVenue] = useState();
   const [filteredPlayer, setFilteredPlayer] = useState(null);
@@ -43,6 +43,12 @@ const PlayerProfile = () => {
         console.error("Error fetching players:", err);
       }
     };
+
+      const nameParts = name.split(" ");
+        const initials = nameParts.slice(0, -1).map((n) => n[0].toUpperCase()).join("");
+        const lastName = nameParts[nameParts.length - 1];
+        name = initials+" "+(lastName.charAt(0).toUpperCase() + lastName.substring(1))
+          
 
     const fetchPlayersVenue = async () => {
       try {
