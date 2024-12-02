@@ -170,14 +170,20 @@ function VenueYearStats() {
             <StatsCard
               icon={<CandyCane />}
               label={isBowler ? "Runs Conceded" : "Total Runs"}
-              value={isBowler ? currVenue?.bowl?.givesRun || 0 : currVenue?.bat?.runs || 0}
+              value={
+                isBowler
+                  ? currVenue?.bowl?.givesRun || 0
+                  : currVenue?.bat?.runs || 0
+              }
               color="green"
             />
             <StatsCard
               icon={<Clock />}
               label={isBowler ? "Total Bowled" : "Balls Faced"}
               value={
-                isBowler ? currVenue?.bowl?.bowls || 0 : currVenue?.bat?.bowls || 0
+                isBowler
+                  ? currVenue?.bowl?.bowls || 0
+                  : currVenue?.bat?.bowls || 0
               }
               color="blue"
             />
@@ -186,49 +192,38 @@ function VenueYearStats() {
               label={isBowler ? "Economy Rate" : "Strike Rate"}
               value={
                 isBowler
-                  ? (currVenue?.bowl?.wickets !== 0 ? (currVenue?.bowl?.givesRun / currVenue?.bowl?.wickets) : 0  || 0).toFixed(2)
-                  : ((currVenue?.bat?.runs / currVenue?.bat?.bowls)*100  || 0).toFixed(2)
+                  ? (currVenue?.bowl?.wickets !== 0
+                      ? currVenue?.bowl?.givesRun / currVenue?.bowl?.wickets
+                      : 0 || 0
+                    ).toFixed(2)
+                  : (
+                      (currVenue?.bat?.runs / currVenue?.bat?.bowls) * 100 || 0
+                    ).toFixed(2)
               }
               color="purple"
             />
           </div>
-
         </div>
-          <div className="p-4 flex gap-4 flex-wrap">
-            {Object.entries(venue).map(([venueName, details]) => {
-              if((isBowler && details.bowl) || (!isBowler && details.bat))
-            return (
-              // <div key={venueName} onClick={ () => setCurrVenue(details) }  className="border-b pb-4 mb-4">
-                // <h2 className="font-bold text-lg">{venueName}</h2>
-                // {/* <div className="pl-4">
-                //   {Object.entries(details).map(([role, stats]) => (
-                //     <div key={role} className="mb-2">
-                //       <h3 className="font-semibold capitalize">{role}</h3>
-                //       <ul className="list-disc pl-6">
-                //         {Object.entries(stats).map(([key, value]) => (
-                //           <li key={key}>
-                //             {key}: {value}
-                //           </li>
-                //         ))}
-                //       </ul>
-                //     </div>
-                //   ))}
-                // </div> */}
-                  <button
-                key={venueName}
-                onClick={ () => setCurrVenue(details) }
-                className={`flex-shrink-0 p-3 rounded-lg transition-all ${
-                  currVenue === details
-                    ? "bg-blue-600 text-white shadow-lg"
-                    : "bg-white text-gray-700 hover:bg-blue-100"
-                }`}
-              >
-                <MapPin className="mr-2 inline" size={20} />
-                {venueName}
-                  </button>
-              // </div>
-            )})}
-          </div>
+        <div className="p-4 flex gap-4 flex-wrap">
+          {Object.entries(venue).map(([venueName, details]) => {
+            if ((isBowler && details.bowl) || (!isBowler && details.bat))
+              return (
+                <button
+                  key={venueName}
+                  onClick={() => setCurrVenue(details)}
+                  className={`flex-shrink-0 p-3 rounded-lg transition-all ${
+                    currVenue === details
+                      ? "bg-blue-600 text-white shadow-lg"
+                      : "bg-white text-gray-700 hover:bg-blue-100"
+                  }`}
+                >
+                  <MapPin className="mr-2 inline" size={20} />
+                  {venueName}
+                </button>
+                // </div>
+              );
+          })}
+        </div>
       </div>
     </div>
   );
